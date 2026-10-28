@@ -1,1 +1,196 @@
-
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="ETAP CONTROL: aplicación para la gestión, seguimiento y control de estaciones de tratamiento de agua potable.">
+<meta name="theme-color" content="#0755a5">
+<title>ETAP CONTROL | Control y gestión del agua</title>
+<style>
+:root{--navy:#082d60;--blue:#0785f9;--blue2:#0aa5e8;--pale:#eef7ff;--text:#102e5e;--muted:#426187;--white:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--text);background:#fff}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1120px,calc(100% - 44px));margin:auto}
+header{height:72px;position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);box-shadow:0 2px 16px #092d6010}
+.nav{height:100%;display:flex;align-items:center;justify-content:space-between;gap:22px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:850;letter-spacing:-.6px;color:var(--navy);font-size:22px;white-space:nowrap}
+.brand small{display:block;font-size:10px;letter-spacing:0;font-weight:500;color:#45617e;margin-top:1px}
+.logo{width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(145deg,#0eb5f2,#0874ed);box-shadow:inset 0 2px 5px #ffffff55;color:white}
+.logo svg{width:26px;height:30px}
+.brand em{font-style:normal;color:#0798ed}
+.links{display:flex;align-items:center;gap:30px;font-size:12px;font-weight:700}
+.links a{padding:9px 0;border-bottom:2px solid transparent}
+.links a:hover,.links a.active{color:var(--blue);border-color:var(--blue)}
+.menu{display:none;border:0;background:#edf6ff;border-radius:10px;padding:10px;color:var(--navy);font-size:20px}
+.hero{position:relative;overflow:hidden;color:white;background:radial-gradient(ellipse at 78% 24%,#177bb4 0%,transparent 36%),linear-gradient(110deg,#062e64 0%,#064b8c 55%,#117da9 100%);min-height:410px}
+.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#062e64 0%,#062e64e8 35%,#062e6440 75%,#062e6420),radial-gradient(ellipse at 75% 100%,#d4efff55,transparent 42%);pointer-events:none}
+.hero-grid{position:relative;display:grid;grid-template-columns: .92fr 1.08fr;gap:25px;align-items:center;min-height:410px;padding-top:22px;padding-bottom:24px}
+.hero-copy{position:relative;z-index:2}
+h1{font-size:clamp(38px,4.2vw,54px);line-height:1.03;letter-spacing:-1.5px;margin:0 0 20px;font-weight:850}
+.hero p{font-size:16px;line-height:1.6;max-width:450px;color:#f1f7ff;margin:0 0 24px}
+.checks{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;margin:0 0 30px}
+.checks span{display:flex;align-items:center;gap:7px;white-space:nowrap}
+.check{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#078bff;font-weight:900}
+.actions{display:flex;gap:14px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;border-radius:28px;padding:13px 22px;font-size:13px;font-weight:750;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px #001b4d33}
+.btn-primary{background:linear-gradient(110deg,#078dff,#0874ef);color:#fff}
+.btn-outline{border:1.5px solid #d8e9ff;color:#fff;background:#ffffff0b}
+.btn-light{background:white;color:#0754a1}
+.hero-art{position:relative;min-width:0;padding:24px 0 8px}
+.plant{position:absolute;inset:8% -20% 0 0;background:linear-gradient(0deg,#d6e8e9aa,transparent 45%),repeating-linear-gradient(90deg,#ffffff12 0 2px,transparent 2px 75px);clip-path:polygon(8% 22%,100% 0,100% 100%,0 100%);opacity:.8}
+.laptop{position:relative;margin:0 auto;width:min(100%,550px);border:8px solid #101820;border-bottom-width:12px;border-radius:15px;background:#0b1c31;box-shadow:0 20px 35px #001a3e66;transform:perspective(900px) rotateY(-3deg)}
+.screen{background:#f7fbff;border-radius:5px;overflow:hidden;min-height:245px;display:grid;grid-template-columns:95px 1fr}
+.side{background:#073e79;color:#d7edff;padding:12px 8px;font-size:8px}
+.side strong{display:block;font-size:10px;margin:0 0 18px;color:#fff}
+.side div{padding:7px 4px;border-radius:4px;margin-bottom:3px}
+.side div:first-of-type{background:#1266ae}
+.dash{padding:14px 13px;color:#15385f;font-size:9px}
+.dash-head{display:flex;justify-content:space-between;align-items:center;font-weight:800;margin-bottom:13px}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.metric{background:white;border:1px solid #e2edf7;border-radius:7px;padding:10px 7px;box-shadow:0 3px 8px #163d6810}
+.metric small{display:block;color:#56718f;font-size:8px;margin-bottom:6px}
+.metric b{font-size:16px;white-space:nowrap}
+.graph{margin-top:10px;background:white;border:1px solid #e2edf7;border-radius:7px;padding:10px}
+.graph-title{font-weight:800;margin-bottom:8px}
+.graph svg{display:block;width:100%;height:100px}
+.laptop-base{height:10px;width:112%;margin-left:-6%;background:linear-gradient(#c5d0da,#647483 55%,#e6ebef);border-radius:0 0 20px 20px;box-shadow:0 8px 14px #00152f55}
+.phone{position:absolute;right:-1%;bottom:-1px;width:112px;border:6px solid #121b24;border-radius:22px;background:#0d2b4b;padding:6px 4px 8px;box-shadow:0 12px 25px #00152f77;transform:rotate(2deg)}
+.phone-screen{border-radius:12px;overflow:hidden;background:#f3f8fd;min-height:205px}
+.phone-top{background:#07539a;color:white;font-size:8px;font-weight:800;padding:12px 7px}
+.phone-item{margin:7px 5px;background:#fff;border-radius:6px;padding:9px 6px;font-size:8px;font-weight:700;box-shadow:0 2px 5px #123a6514}
+.section{padding:35px 0 26px}
+.section-heading{text-align:center;margin:0 auto 22px}
+.section-heading h2{font-size:29px;letter-spacing:-.7px;margin:0 0 6px;color:#0b356c}
+.section-heading p{margin:0;color:var(--muted);font-size:15px}
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:19px}
+.feature{padding:20px 21px 21px;background:linear-gradient(145deg,#f0f8ff,#eaf5ff);border:1px solid #edf5fd;border-radius:13px;min-height:184px;transition:transform .2s,box-shadow .2s}
+.feature:hover{transform:translateY(-4px);box-shadow:0 12px 24px #0d4a8512}
+.feature-icon{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#0aa4ff,#0868f0);color:white;margin-bottom:12px;box-shadow:0 4px 10px #0076ed25}
+.feature-icon svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.feature h3{font-size:16px;margin:0 0 10px;color:#0a2f65}
+.feature p{font-size:12.5px;line-height:1.6;margin:0;color:#36577f}
+.how{padding:15px 0 34px;background:radial-gradient(ellipse at 80% 80%,#eaf6ff 0%,transparent 45%)}
+.how-grid{display:grid;grid-template-columns:.9fr 1.1fr;align-items:center;gap:45px}
+.how h2{font-size:29px;margin:0 0 24px;letter-spacing:-.6px}
+.steps{display:grid;gap:20px}
+.step{display:grid;grid-template-columns:38px 1fr;gap:14px;align-items:start;position:relative}
+.step:not(:last-child):after{content:"";position:absolute;top:39px;left:18px;width:2px;height:calc(100% + 1px);background:#c9e3fc}
+.number{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#087ef4;color:#fff;font-weight:800;box-shadow:0 3px 8px #087ef433;z-index:1}
+.step h3{font-size:15px;margin:2px 0 5px}
+.step p{font-size:13px;color:var(--muted);margin:0;line-height:1.5}
+.devices{display:flex;align-items:center;justify-content:center;gap:15px;position:relative;min-height:260px}
+.devices:before{content:"";position:absolute;width:115%;height:65%;border-radius:50%;background:#e6f4ff;z-index:0}
+.tablet{position:relative;z-index:1;width:74%;padding:8px;border:7px solid #111c28;border-radius:15px;background:#111;box-shadow:0 10px 20px #082c552b}
+.tablet .screen{min-height:205px;grid-template-columns:70px 1fr}
+.tablet .side{font-size:7px;padding:9px 6px}
+.tablet .side strong{font-size:8px;margin-bottom:10px}
+.tablet .side div{padding:5px 2px}
+.tablet .dash{padding:9px 8px}
+.tablet .metric{padding:7px 4px}
+.tablet .metric b{font-size:11px}
+.tablet .metric small{font-size:6px}
+.tablet .graph svg{height:72px}
+.devices .phone{position:relative;right:auto;bottom:auto;flex-shrink:0;width:98px;z-index:2;transform:rotate(1deg)}
+.devices .phone-screen{min-height:190px}
+.cta{background:linear-gradient(110deg,#07529e,#0062b9);color:white;padding:23px 0}
+.cta-inner{display:flex;align-items:center;gap:25px}
+.cta .logo{width:62px;height:62px;flex-shrink:0}
+.cta h2{font-size:21px;margin:0 0 5px}
+.cta p{font-size:13px;margin:0;color:#e3f1ff}
+.cta .btn{margin-left:auto;min-width:220px}
+footer{background:#062858;color:#e8f4ff;padding:20px 0}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:20px}
+footer .brand{color:#fff;font-size:17px}
+footer .brand small{color:#d2e5f8;font-size:9px}
+footer .logo{width:36px;height:36px}
+.footer-links{display:flex;gap:18px;flex-wrap:wrap;font-size:10px;color:#e1edfa}
+.footer-links a:hover{color:#42c4ff}
+.footer-note{font-size:10px;white-space:nowrap;color:#c6e8ff}
+.contact{padding:46px 0;background:#f5faff;display:none}
+.contact:target{display:block}
+.contact-card{max-width:700px;margin:auto;background:white;border:1px solid #e1eefb;border-radius:18px;padding:25px;text-align:center}
+.contact-card h2{margin-top:0}
+@media(max-width:850px){.links{gap:15px}.hero-grid{grid-template-columns:1fr 1fr}.features{grid-template-columns:repeat(2,1fr)}.screen{grid-template-columns:78px 1fr}.metric b{font-size:12px}.phone{width:92px}.how-grid{gap:20px}.footer-note{display:none}}
+@media(max-width:650px){header{height:66px}.wrap{width:min(100% - 30px,520px)}.brand{font-size:19px}.logo{width:40px;height:40px}.menu{display:block}.links{display:none;position:absolute;top:66px;left:0;right:0;padding:12px 22px 18px;background:#fff;box-shadow:0 12px 20px #092d6017;flex-direction:column;align-items:stretch;gap:4px}.links.open{display:flex}.links a{padding:10px 0}.hero-grid{grid-template-columns:1fr;gap:5px;padding-top:38px;padding-bottom:35px}.hero{min-height:auto}.hero-copy{max-width:520px}.hero p{font-size:15px}.checks{gap:11px;margin-bottom:22px}.hero-art{padding:10px 4px 18px;margin-right:15px}.laptop{width:100%;border-width:6px;border-bottom-width:9px}.screen{min-height:200px;grid-template-columns:67px 1fr}.side{font-size:7px}.side strong{font-size:8px;margin-bottom:12px}.dash{padding:9px 7px}.metric{padding:7px 4px}.metric small{font-size:6px}.metric b{font-size:11px}.graph svg{height:75px}.phone{width:78px;right:-14px;bottom:0;border-width:5px}.phone-screen{min-height:165px}.phone-top{font-size:7px;padding:9px 5px}.phone-item{font-size:7px;margin:5px 4px;padding:7px 4px}.section{padding:32px 0 20px}.section-heading h2,.how h2{font-size:25px}.section-heading p{font-size:13px}.features{gap:12px}.feature{padding:15px;min-height:185px}.feature-icon{width:43px;height:43px}.feature h3{font-size:14px}.feature p{font-size:12px}.how-grid{grid-template-columns:1fr;gap:20px}.how{padding:20px 0 28px}.devices{min-height:210px}.tablet{width:75%}.tablet .screen{min-height:170px;grid-template-columns:55px 1fr}.tablet .side{font-size:6px}.tablet .metric b{font-size:9px}.tablet .graph svg{height:58px}.devices .phone{width:78px}.devices .phone-screen{min-height:165px}.cta-inner{gap:13px;flex-wrap:wrap}.cta .logo{width:48px;height:48px}.cta h2{font-size:17px}.cta p{font-size:12px}.cta .btn{margin:8px 0 0;width:100%;min-width:0}.footer-inner{align-items:flex-start;flex-direction:column}.footer-links{gap:13px}.footer-links a{font-size:11px}}
+@media(max-width:380px){.features{grid-template-columns:1fr}.feature{min-height:0}.checks{font-size:11px}.hero h1{font-size:37px}.screen{grid-template-columns:57px 1fr}.metric b{font-size:9px}.dash{padding:7px 5px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#inicio" aria-label="ETAP CONTROL, inicio">
+      <span class="logo"><svg viewBox="0 0 32 36" aria-hidden="true"><path d="M16 2C13 9 5 17 5 23a11 11 0 0 0 22 0C27 17 19 9 16 2Z" fill="white"/><path d="M11 24c.5 3 2.2 4.5 5 5" fill="none" stroke="#16a5ed" stroke-width="2.4" stroke-linecap="round"/></svg></span>
+      <span>ETAP <em>CONTROL</em><small>Control y gestión del agua</small></span>
+    </a>
+    <button class="menu" aria-label="Abrir menú" aria-expanded="false" onclick="toggleMenu()">☰</button>
+    <nav class="links" id="navLinks" aria-label="Navegación principal">
+      <a class="active" href="#inicio" onclick="closeMenu()">Inicio</a><a href="#caracteristicas" onclick="closeMenu()">Características</a><a href="#como-funciona" onclick="closeMenu()">Cómo funciona</a><a href="#acceso" onclick="closeMenu()">Acceso</a><a href="#contacto" onclick="closeMenu()">Contacto</a>
+    </nav>
+  </div>
+</header>
+<main>
+<section class="hero" id="inicio">
+ <div class="wrap hero-grid">
+  <div class="hero-copy">
+   <h1>Toda tu ETAP<br>bajo control</h1>
+   <p>ETAP CONTROL es una aplicación diseñada para facilitar la gestión, el seguimiento y el control de tu Estación de Tratamiento de Agua Potable (ETAP).</p>
+   <div class="checks"><span><b class="check">✓</b> Más eficiencia</span><span><b class="check">✓</b> Menos incidencias</span><span><b class="check">✓</b> Mejor toma de decisiones</span></div>
+   <div class="actions"><a class="btn btn-primary" href="#acceso">Acceder a la aplicación <span aria-hidden="true">→</span></a><a class="btn btn-outline" href="#caracteristicas">Conocer la app <span aria-hidden="true">▷</span></a></div>
+  </div>
+  <div class="hero-art" aria-label="Vista ilustrativa del panel de ETAP CONTROL">
+   <div class="plant"></div>
+   <div class="laptop"><div class="screen">
+    <aside class="side"><strong>💧 ETAP CONTROL</strong><div>⌂ &nbsp; Inicio</div><div>◉ &nbsp; Lecturas</div><div>▦ &nbsp; Instalaciones</div><div>♧ &nbsp; Incidencias</div><div>▤ &nbsp; Partes de trabajo</div><div>♙ &nbsp; Usuarios</div><div>⚙ &nbsp; Configuración</div></aside>
+    <div class="dash"><div class="dash-head"><span>Lecturas del día</span><span>● Usuario</span></div><div class="metrics"><div class="metric"><small>Caudal</small><b>1.245 <small>m³/h</small></b></div><div class="metric"><small>Turbidez</small><b>0,32 <small>NTU</small></b></div><div class="metric"><small>Cloro residual</small><b>0,85 <small>mg/L</small></b></div><div class="metric"><small>pH</small><b>7,4</b></div></div>
+     <div class="graph"><div class="graph-title">Evolución de parámetros</div><svg viewBox="0 0 400 100" role="img" aria-label="Gráfico ilustrativo de evolución de parámetros"><g stroke="#e5edf6" stroke-width="1"><path d="M0 15H400M0 35H400M0 55H400M0 75H400M0 95H400"/></g><path d="M0 70 C35 25 55 55 85 42 S140 25 175 48 S230 65 260 28 S320 55 400 20" stroke="#168dff" stroke-width="2.5" fill="none"/><path d="M0 42 C45 55 55 22 100 55 S170 40 210 61 S290 32 330 50 S365 62 400 42" stroke="#ffb52e" stroke-width="2" fill="none"/><path d="M0 80 C40 65 80 90 120 68 S190 75 235 62 S300 85 350 65 S375 72 400 59" stroke="#32ba7c" stroke-width="2" fill="none"/><path d="M0 88 C40 92 60 75 100 85 S180 72 220 89 S300 75 350 84 S380 80 400 90" stroke="#8a75ee" stroke-width="2" fill="none"/></svg></div>
+    </div>
+   </div><div class="laptop-base"></div>
+   <div class="phone"><div class="phone-screen"><div class="phone-top">💧 ETAP CONTROL</div><div class="phone-item">♧ &nbsp; Lecturas</div><div class="phone-item">▦ &nbsp; Instalaciones</div><div class="phone-item">♧ &nbsp; Incidencias</div><div class="phone-item">▤ &nbsp; Partes de trabajo</div></div></div>
+  </div>
+ </div>
+</section>
+<section class="section" id="caracteristicas">
+ <div class="wrap">
+  <div class="section-heading"><h2>Funciones principales</h2><p>Todo lo que necesitas para un control completo y eficaz de tu ETAP.</p></div>
+  <div class="features">
+   <article class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 2C9 7 4 12 4 16a8 8 0 0 0 16 0c0-4-5-9-8-14Z"/><path d="M8 17c.4 1.5 1.5 2.5 3 3"/></svg></div><h3>Lecturas diarias</h3><p>Registra y consulta los consumos y parámetros del agua en tiempo real o de forma histórica.</p></article>
+   <article class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="m19.4 15 .1.1 1.4 1.1-1.5 2.6-1.7-.6a8 8 0 0 1-1.5.9l-.3 1.8h-3l-.3-1.8a8 8 0 0 1-1.5-.9l-1.7.6-1.5-2.6 1.4-1.1a7 7 0 0 1 0-1.8l-1.4-1.1 1.5-2.6 1.7.6a8 8 0 0 1 1.5-.9l.3-1.8h3l.3 1.8a8 8 0 0 1 1.5.9l1.7-.6 1.5 2.6-1.4 1.1a7 7 0 0 1 0 1.7Z"/></svg></div><h3>Estado de la ETAP</h3><p>Controla el estado de los equipos, instalaciones y procesos de tratamiento.</p></article>
+   <article class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M8 4h-3v17h14V4h-3"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M8 11h8M8 15h8M8 18h5"/></svg></div><h3>Partes de trabajo</h3><p>Gestiona incidencias, tareas y documentación de forma sencilla y ordenada.</p></article>
+   <article class="feature"><div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a7 7 0 0 1 14 0v2ZM16 4a4 4 0 0 1 0 7M18 14a6 6 0 0 1 4 5v2"/></svg></div><h3>Acceso privado</h3><p>Acceso para usuarios autorizados, con diferentes niveles de permisos: administrador y operador.</p></article>
+  </div>
+ </div>
+</section>
+<section class="how" id="como-funciona">
+ <div class="wrap how-grid">
+  <div><h2>¿Cómo funciona?</h2><div class="steps">
+   <div class="step"><div class="number">1</div><div><h3>Accede desde cualquier dispositivo</h3><p>PC, tablet o móvil. Una experiencia clara y adaptada a tu pantalla.</p></div></div>
+   <div class="step"><div class="number">2</div><div><h3>Consulta y registra la información</h3><p>Organiza lecturas, revisiones e incidencias de forma rápida y sencilla.</p></div></div>
+   <div class="step"><div class="number">3</div><div><h3>Mantén el control</h3><p>Mejora la organización del trabajo y ayuda a reducir riesgos.</p></div></div>
+  </div></div>
+  <div class="devices" aria-label="Vista ilustrativa en tablet y móvil">
+   <div class="tablet"><div class="screen"><aside class="side"><strong>💧 ETAP CONTROL</strong><div>⌂ Inicio</div><div>◉ Lecturas</div><div>▦ Instalaciones</div><div>♧ Incidencias</div><div>▤ Partes</div><div>♙ Usuarios</div></aside><div class="dash"><div class="dash-head">Lecturas del día</div><div class="metrics"><div class="metric"><small>Caudal</small><b>1.245</b></div><div class="metric"><small>Turbidez</small><b>0,32</b></div><div class="metric"><small>Cloro</small><b>0,85</b></div><div class="metric"><small>pH</small><b>7,4</b></div></div><div class="graph"><div class="graph-title">Evolución de parámetros</div><svg viewBox="0 0 400 100" aria-hidden="true"><g stroke="#e5edf6"><path d="M0 15H400M0 35H400M0 55H400M0 75H400M0 95H400"/></g><path d="M0 70 C35 25 55 55 85 42 S140 25 175 48 S230 65 260 28 S320 55 400 20" stroke="#168dff" stroke-width="3" fill="none"/><path d="M0 42 C45 55 55 22 100 55 S170 40 210 61 S290 32 330 50 S365 62 400 42" stroke="#ffb52e" stroke-width="2" fill="none"/><path d="M0 80 C40 65 80 90 120 68 S190 75 235 62 S300 85 350 65 S375 72 400 59" stroke="#32ba7c" stroke-width="2" fill="none"/></svg></div></div></div></div>
+   <div class="phone"><div class="phone-screen"><div class="phone-top">💧 ETAP CONTROL</div><div class="phone-item">Lecturas del día<br><br>Caudal · 1.245 m³/h</div><div class="phone-item">Turbidez · 0,32 NTU</div><div class="phone-item">Cloro · 0,85 mg/L</div><div class="phone-item">pH · 7,4</div></div></div>
+  </div>
+ </div>
+</section>
+<section class="cta" id="acceso"><div class="wrap cta-inner">
+ <span class="logo"><svg viewBox="0 0 32 36" aria-hidden="true"><path d="M16 2C13 9 5 17 5 23a11 11 0 0 0 22 0C27 17 19 9 16 2Z" fill="white"/><path d="M11 24c.5 3 2.2 4.5 5 5" fill="none" stroke="#16a5ed" stroke-width="2.4" stroke-linecap="round"/></svg></span>
+ <div><h2>¿Quieres probar ETAP CONTROL?</h2><p>Accede a la aplicación y descubre lo fácil que es gestionar tu ETAP.</p></div>
+ <a class="btn btn-light" href="mailto:contacto@etapcontrol.es?subject=Acceso%20a%20ETAP%20CONTROL">Solicitar acceso <span aria-hidden="true">→</span></a>
+</div></section>
+<section class="contact" id="contacto"><div class="wrap"><div class="contact-card"><h2>Contacta con ETAP CONTROL</h2><p>¿Quieres conocer la aplicación o solicitar acceso? Escríbenos y te informaremos.</p><a class="btn btn-primary" href="mailto:contacto@etapcontrol.es?subject=Consulta%20ETAP%20CONTROL">Enviar consulta →</a><p style="font-size:11px;color:#6a819d;margin-bottom:0">Nota: sustituye esta dirección de correo provisional por tu correo de contacto definitivo antes de publicar la web.</p></div></div></section>
+</main>
+<footer><div class="wrap footer-inner">
+ <a class="brand" href="#inicio"><span class="logo"><svg viewBox="0 0 32 36" aria-hidden="true"><path d="M16 2C13 9 5 17 5 23a11 11 0 0 0 22 0C27 17 19 9 16 2Z" fill="white"/></svg></span><span>ETAP <em>CONTROL</em><small>Control y gestión del agua</small></span></a>
+ <nav class="footer-links"><a href="#inicio">Inicio</a><a href="#caracteristicas">Características</a><a href="#como-funciona">Cómo funciona</a><a href="#acceso">Acceso</a><a href="#contacto">Contacto</a></nav>
+ <div class="footer-note">≈ Tecnología al servicio del agua</div>
+</div></footer>
+<script>
+function toggleMenu(){const n=document.getElementById('navLinks');const b=document.querySelector('.menu');const open=n.classList.toggle('open');b.setAttribute('aria-expanded',String(open));}
+function closeMenu(){document.getElementById('navLinks').classList.remove('open');document.querySelector('.menu').setAttribute('aria-expanded','false');}
+</script>
+</body>
+</html>
